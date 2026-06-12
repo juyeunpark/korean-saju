@@ -1,19 +1,14 @@
 :root {
-  --bg-color: oklch(12% 0.02 250);
-  --card-bg: oklch(18% 0.03 250);
-  --text-main: oklch(95% 0.01 250);
-  --text-dim: oklch(75% 0.02 250);
-  --accent: oklch(70% 0.15 200);
-  --border: oklch(30% 0.04 250);
-  
-  --wood: #4CAF50;
-  --fire: #F44336;
-  --earth: #FFEB3B;
-  --metal: #E0E0E0;
-  --water: #2196F3;
+  --bg-color: oklch(98% 0.01 80);
+  --chat-bg: oklch(100% 0 0);
+  --text-main: oklch(20% 0.02 30);
+  --text-muted: oklch(50% 0.02 30);
+  --accent: oklch(45% 0.15 30); /* Grandmother's Signature Red */
+  --bubble-ai: oklch(95% 0.02 30);
+  --bubble-user: oklch(45% 0.15 30);
 }
 
-@layer base, components;
+@layer base, components, chat;
 
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,132 +16,126 @@
     font-family: 'Pretendard', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
-    display: flex;
-    justify-content: center;
-    padding: 2rem 1rem;
     line-height: 1.6;
+    overflow-x: hidden;
   }
 }
 
 @layer components {
-  .container { max-width: 800px; width: 100%; }
-  
-  .card {
-    background: var(--card-bg);
-    border-radius: 20px;
+  .app-shell {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    position: relative;
+  }
+
+  header {
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 1px dashed oklch(80% 0.02 30);
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  .input-container {
+    background: white;
     padding: 2rem;
-    border: 1px solid var(--border);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     margin-bottom: 2rem;
   }
 
-  header { text-align: center; margin-bottom: 3rem; }
-  header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
-  header p { color: var(--text-dim); }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
-
-  .field { display: flex; flex-direction: column; gap: 0.5rem; }
-  label { font-size: 0.8rem; font-weight: 600; color: var(--text-dim); }
+  .field { margin-bottom: 1.5rem; }
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); }
   
   input, select {
+    width: 100%;
     padding: 1rem;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.05);
-    color: white;
+    border: 1px solid oklch(90% 0.01 30);
+    border-radius: 12px;
     font-size: 1rem;
+    background: oklch(99% 0 0);
   }
 
   .btn {
     width: 100%;
     padding: 1.2rem;
-    border-radius: 12px;
     border: none;
+    border-radius: 12px;
     background: var(--accent);
-    color: var(--bg-color);
-    font-size: 1.1rem;
+    color: white;
     font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: 0.2s;
   }
-  .btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+}
 
-  /* Analysis View */
-  .analysis-view { display: none; animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-  @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-  .summary-box {
-    background: rgba(255,255,255,0.03);
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    border-left: 4px solid var(--accent);
-  }
-
-  .chart-container {
+@layer chat {
+  #chat-history {
+    flex-grow: 1;
     display: flex;
-    gap: 10px;
-    height: 150px;
-    align-items: flex-end;
-    margin: 2rem 0;
-    padding: 1rem;
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 5rem;
   }
-  .bar { flex: 1; border-radius: 4px 4px 0 0; position: relative; min-height: 5px; }
-  .bar span { 
-    position: absolute; 
-    top: -25px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    font-size: 0.7rem;
-    white-space: nowrap;
+
+  .message {
+    max-width: 85%;
+    padding: 1.2rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    position: relative;
+    animation: messageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
   }
-  .bar label {
-    position: absolute;
-    bottom: -25px;
+
+  @keyframes messageIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.ai {
+    align-self: flex-start;
+    background: white;
+    border-bottom-left-radius: 4px;
+    color: var(--text-main);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid oklch(95% 0.01 30);
+  }
+
+  .message.user {
+    align-self: flex-end;
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  .typing-indicator {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    display: none;
+  }
+
+  .next-controls {
+    position: fixed;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.7rem;
-  }
-
-  .section-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-  @media (max-width: 700px) { .section-grid { grid-template-columns: 1fr; } }
-
-  .ana-card {
-    background: rgba(255,255,255,0.02);
-    padding: 1.5rem;
-    border-radius: 15px;
-    border: 1px solid var(--border);
-  }
-  .ana-card h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-  .ana-card p { font-size: 0.95rem; color: var(--text-dim); }
-
-  .tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    margin-right: 5px;
-    background: rgba(255,255,255,0.1);
-  }
-
-  .comparison {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+    width: 90%;
+    max-width: 500px;
+    display: none;
+    gap: 1rem;
   }
 }
