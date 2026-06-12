@@ -1,14 +1,75 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>팩폭할머니 사주 - 정신 번쩍 드는 운세</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+  <div class="app-container">
+    <div class="card" id="main-card">
+      <div class="header">
+        <h1>👵 팩폭할머니 사주</h1>
+        <p>현실 부정하지 말고 똑바로 들어라.</p>
+      </div>
+
+      <!-- Input Section -->
+      <div id="input-section">
+        <div class="form-group">
+          <label for="user-name">이름 (안 써도 됨)</label>
+          <input type="text" id="user-name" placeholder="이름이 뭐냐?">
+        </div>
+
+        <div class="form-group">
+          <label for="birth-date">생년월일 (필수)</label>
+          <input type="date" id="birth-date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">성별 (선택)</label>
+          <select id="gender">
+            <option value="none">모름</option>
+            <option value="male">남자</option>
+            <option value="female">여자</option>
+          </select>
+        </div>
+
+        <button class="btn" id="analyze-btn">운세 좀 봐주라</button>
+      </div>
+
+      <!-- Result Section -->
+      <div id="result-section" class="result-section">
+        <div class="fact-bomb-box">
+          <h3 id="result-element">태어난 기운: ???</h3>
+          <p id="result-summary">"요즘 애들은 말이야..."</p>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <h4>성격 팩폭</h4>
+            <p id="result-personality">내용 없음</p>
+          </div>
+          <div class="detail-item">
+            <h4>연애 훈수</h4>
+            <p id="result-love">내용 없음</p>
+          </div>
+          <div class="detail-item">
+            <h4>직장/진로</h4>
+            <p id="result-career">내용 없음</p>
+          </div>
+          <div class="detail-item">
+            <h4>할머니의 한마디</h4>
+            <p id="result-advice">내용 없음</p>
+          </div>
+        </div>
+
+        <button class="btn" id="reset-btn">다시 물어보기</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/main.js"></script>
 </body>
 </html>
