@@ -108,4 +108,18 @@
   }
 
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Deep Report Styles */
+  .deep-report-body { padding: 2rem 0; }
+  .section-group { margin-bottom: 4rem; border-bottom: 1px dashed #ddd; padding-bottom: 2rem; }
+  .section-title { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 2rem; border-left: 5px solid var(--accent); padding-left: 1rem; }
+  .sub-section { margin-bottom: 2rem; }
+  .sub-section h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main); }
+  .sub-section p { font-size: 1.05rem; line-height: 1.8; color: var(--text-dim); text-align: justify; }
+  
+  .sub-section.highlight { background: rgba(0,0,0,0.03); padding: 1.5rem; border-radius: 12px; }
+  .sub-section.danger { border-left: 3px solid #ff4d4d; padding-left: 1rem; }
+  .advice-final { background: var(--text-main); color: white; padding: 3rem 2rem; border-radius: 24px; }
+  .advice-final .section-title { color: white; border-left-color: white; }
+  .advice-final h4, .advice-final p { color: rgba(255,255,255,0.9); }
 }

@@ -1,4 +1,4 @@
-import { analyzeSaju, CONVERSATIONS, ELEMENTS } from './saju-engine.js';
+import { analyzeSaju, DEEP_ANALYSIS, ELEMENTS } from './saju-engine.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const inputView = document.getElementById('input-view');
@@ -9,15 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const birthDateInput = document.getElementById('birth-date');
   const birthTimeInput = document.getElementById('birth-time');
   const userNameInput = document.getElementById('user-name');
-
-  // Intersection Observer for Scroll Animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
 
   analyzeBtn.addEventListener('click', () => {
     const date = birthDateInput.value;
@@ -33,65 +24,226 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       const result = analyzeSaju(date, birthTimeInput.value);
-      renderViralReport(result, name);
+      renderHierarchicalReport(result, name);
 
       inputView.style.display = 'none';
       viralReport.style.display = 'block';
-      
-      // Initialize Observer on newly shown items
-      document.querySelectorAll('.insight-item').forEach(item => observer.observe(item));
-      
       window.scrollTo(0, 0);
-    }, 1200);
+    }, 1500);
   });
 
-  function renderViralReport(result, name) {
+  function renderHierarchicalReport(result, name) {
     const { dominant } = result;
-    const msgs = CONVERSATIONS[dominant];
+    const data = DEEP_ANALYSIS[dominant];
 
-    // 1. Hook (Emotional Opening)
-    const hooks = {
-      [ELEMENTS.WOOD]: "너는 성실한 게 아니라 그냥 미련하게 버티고 있는 거다.",
-      [ELEMENTS.FIRE]: "화려해 보이고 싶어서 안달복달하는 네 모습이 안쓰럽구나.",
-      [ELEMENTS.EARTH]: "신중한 척하지 마라. 너는 지금 그냥 결정하기 무서운 거다.",
-      [ELEMENTS.METAL]: "완벽주의? 웃기지 마라. 너는 남들에게 비난받기 싫은 겁쟁이다.",
-      [ELEMENTS.WATER]: "지혜로운 척 굴지 마라. 너는 그냥 현실을 회피하고 있을 뿐이야."
-    };
-    document.getElementById('res-hook').textContent = `"${name}야, ${hooks[dominant]}"`;
+    const container = document.getElementById('viral-report');
+    container.innerHTML = `
+      <section class="hook-section">
+        <div class="hook-text">"${name}야, 돋보기 좀 가져와라. 네 인생 설계도 좀 뜯어보자."</div>
+        <div class="scroll-hint">심층 분석 결과 ↓</div>
+      </section>
 
-    // 2. One-line Insights
-    document.getElementById('res-summary').textContent = msgs[0].split('.')[0] + ".";
-    document.getElementById('res-personality').textContent = msgs[1].split('.')[0] + ".";
-    document.getElementById('res-love').textContent = msgs[2].split('.')[0] + ".";
-    document.getElementById('res-wealth').textContent = msgs[3].split('.')[0] + ".";
+      <div class="deep-report-body">
+        
+        <!-- 1. Overall Destiny -->
+        <div class="section-group">
+          <h2 class="section-title">1. 전체적인 운명 구조 (Overall Destiny)</h2>
+          <div class="sub-section">
+            <h4>타고난 기운의 핵심</h4>
+            <p>${data.destiny.energy}</p>
+          </div>
+          <div class="sub-section">
+            <h4>인생의 지향점</h4>
+            <p>${data.destiny.direction}</p>
+          </div>
+          <div class="sub-section">
+            <h4>내면과 외면의 괴리</h4>
+            <p>${data.destiny.internal_external}</p>
+          </div>
+        </div>
 
-    // 4. Pain Point (Screenshot-worthy)
-    const painPoints = {
-      [ELEMENTS.WOOD]: "실패가 두려운 게 아니라, 남들에게 실패한 것처럼 보일까 봐 그게 제일 무서운 거다.",
-      [ELEMENTS.FIRE]: "네가 받는 박수 소리가 멈추면, 너는 네가 아무것도 아닌 사람이 될까 봐 겁나지?",
-      [ELEMENTS.EARTH]: "안정적인 게 아니라 정체된 거다. 고인 물은 결국 썩는 법이야.",
-      [ELEMENTS.METAL]: "네가 세운 그 날카로운 기준이 결국 네 주변 사람들뿐만 아니라 너 자신까지 베고 있다.",
-      [ELEMENTS.WATER]: "똑똑한 척 잔머리 굴리다가 네 인생의 가장 큰 기회를 스스로 차버리고 있다."
-    };
-    document.getElementById('res-pain-point').textContent = `"${painPoints[dominant]}"`;
+        <!-- 2. Personality -->
+        <div class="section-group">
+          <h2 class="section-title">2. 성격 및 기질 분석 (Personality)</h2>
+          <div class="sub-section">
+            <h4>사고방식 (Thinking Style)</h4>
+            <p>${data.personality.thinking}</p>
+          </div>
+          <div class="sub-section">
+            <h4>감정 반응 패턴</h4>
+            <p>${data.personality.emotion}</p>
+          </div>
+          <div class="sub-section">
+            <h4>사회적 행동 양식</h4>
+            <p>${data.personality.social}</p>
+          </div>
+          <div class="sub-section">
+            <h4>스트레스 대응 기제</h4>
+            <p>${data.personality.stress}</p>
+          </div>
+          <div class="sub-section highlight">
+            <h4>핵심 강점</h4>
+            <p>${data.personality.strengths}</p>
+          </div>
+          <div class="sub-section highlight danger">
+            <h4>치명적 약점</h4>
+            <p>${data.personality.weaknesses}</p>
+          </div>
+        </div>
 
-    // 5. Future
-    document.getElementById('res-future').textContent = msgs[6].split('.')[0] + ". 네 선택에 달렸다.";
+        <!-- 3. Love -->
+        <div class="section-group">
+          <h2 class="section-title">3. 애정 및 인간관계 (Love & Relationship)</h2>
+          <div class="sub-section">
+            <h4>끌리는 이성의 유형</h4>
+            <p>${data.love.attraction}</p>
+          </div>
+          <div class="sub-section">
+            <h4>관계 시작의 패턴</h4>
+            <p>${data.love.initiation}</p>
+          </div>
+          <div class="sub-section">
+            <h4>연애 중의 행동 양식</h4>
+            <p>${data.love.behavior}</p>
+          </div>
+          <div class="sub-section">
+            <h4>갈등 발생 시 대처</h4>
+            <p>${data.love.conflict}</p>
+          </div>
+          <div class="sub-section">
+            <h4>이별의 징후와 방식</h4>
+            <p>${data.love.breakup}</p>
+          </div>
+          <div class="sub-section danger">
+            <h4>반복되는 연애 실수</h4>
+            <p>${data.love.mistakes}</p>
+          </div>
+        </div>
 
-    // 6. Advice
-    document.getElementById('res-advice').textContent = msgs[7].replace(/<br>/g, '\n');
+        <!-- 4. Wealth -->
+        <div class="section-group">
+          <h2 class="section-title">4. 재물 운용 및 금전 감각 (Wealth)</h2>
+          <div class="sub-section">
+            <h4>돈을 대하는 태도</h4>
+            <p>${data.wealth.mindset}</p>
+          </div>
+          <div class="sub-section">
+            <h4>지출 및 소비 습관</h4>
+            <p>${data.wealth.spending}</p>
+          </div>
+          <div class="sub-section danger">
+            <h4>재물이 새어나가는 지점</h4>
+            <p>${data.wealth.leakage}</p>
+          </div>
+          <div class="sub-section">
+            <h4>저축 및 자산 축적 능력</h4>
+            <p>${data.wealth.saving}</p>
+          </div>
+          <div class="sub-section">
+            <h4>기회 포착 및 투자 성향</h4>
+            <p>${data.wealth.opportunity}</p>
+          </div>
+        </div>
+
+        <!-- 5. Career -->
+        <div class="section-group">
+          <h2 class="section-title">5. 직업적 성취와 성공 패턴 (Career)</h2>
+          <div class="sub-section">
+            <h4>최적의 근무 환경</h4>
+            <p>${data.career.suitable}</p>
+          </div>
+          <div class="sub-section">
+            <h4>피해야 할 환경</h4>
+            <p>${data.career.unsuitable}</p>
+          </div>
+          <div class="sub-section">
+            <h4>성공의 메커니즘</h4>
+            <p>${data.career.success}</p>
+          </div>
+          <div class="sub-section danger">
+            <h4>실패의 트리거</h4>
+            <p>${data.career.failure}</p>
+          </div>
+          <div class="sub-section">
+            <h4>성장 속도와 패턴</h4>
+            <p>${data.career.growth}</p>
+          </div>
+        </div>
+
+        <!-- 6. Warnings -->
+        <div class="section-group">
+          <h2 class="section-title">6. 인생의 함정과 주의사항 (Warnings)</h2>
+          <div class="sub-section danger">
+            <h4>반복되는 삶의 실수</h4>
+            <p>${data.warning.mistakes}</p>
+          </div>
+          <div class="sub-section">
+            <h4>정서적 취약점</h4>
+            <p>${data.warning.emotional}</p>
+          </div>
+          <div class="sub-section">
+            <h4>인간관계의 리스크</h4>
+            <p>${data.warning.relationship}</p>
+          </div>
+          <div class="sub-section">
+            <h4>직업적 리스크</h4>
+            <p>${data.warning.career}</p>
+          </div>
+        </div>
+
+        <!-- 7. Future -->
+        <div class="section-group">
+          <h2 class="section-title">7. 미래의 시나리오 (Future Scenarios)</h2>
+          <div class="sub-section">
+            <h4>현재 궤적 유지 시의 모습</h4>
+            <p>${data.future.trajectory}</p>
+          </div>
+          <div class="sub-section">
+            <h4>단기적인 변화의 흐름</h4>
+            <p>${data.future.short_term}</p>
+          </div>
+          <div class="sub-section highlight">
+            <h4>장기적 인생 경로 (2-3가지)</h4>
+            <p>${data.future.scenarios}</p>
+          </div>
+        </div>
+
+        <!-- 8. Final Advice -->
+        <div class="section-group advice-final">
+          <h2 class="section-title">8. 할머니의 뼈 때리는 조언 (Final Advice)</h2>
+          <div class="sub-section">
+            <h4>핵심적인 문제 지점</h4>
+            <p>${data.advice.core}</p>
+          </div>
+          <div class="sub-section">
+            <h4>당장 교정해야 할 습관</h4>
+            <p>${data.advice.habit}</p>
+          </div>
+          <div class="sub-section highlight">
+            <h4>현실적인 인생 가이드</h4>
+            <p>${data.advice.realistic}</p>
+          </div>
+        </div>
+
+        <div class="share-area" style="text-align: center; margin-top: 4rem;">
+          <button class="btn-primary" id="share-btn">이 심층 분석 공유하기</button>
+          <button class="btn-secondary" onclick="location.reload()" style="margin-top: 1rem; width: 100%; padding: 1rem; border-radius: 15px; border: 1px solid #ddd; background: white; font-weight: 700; cursor: pointer;">다시 분석하기</button>
+        </div>
+      </div>
+    `;
+
+    // Re-bind share button since we overwrote innerHTML
+    document.getElementById('share-btn').addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({
+          title: 'AI 심층 사주 감명서',
+          text: '팩폭할머니의 뼈 때리는 인생 상담 결과',
+          url: window.location.href,
+        }).catch(console.error);
+      } else {
+        alert('주소가 복사되었다!');
+        navigator.clipboard.writeText(window.location.href);
+      }
+    });
   }
-
-  shareBtn.addEventListener('click', () => {
-    if (navigator.share) {
-      navigator.share({
-        title: '팩폭할머니 사주 상담',
-        text: document.getElementById('res-pain-point').textContent,
-        url: window.location.href,
-      }).catch(console.error);
-    } else {
-      alert('주소가 복사되었다. 친구들에게 팩폭을 날려라!');
-      navigator.clipboard.writeText(window.location.href);
-    }
-  });
 });
