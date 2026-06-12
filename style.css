@@ -1,141 +1,135 @@
 :root {
   --bg-color: oklch(98% 0.01 80);
-  --chat-bg: oklch(100% 0 0);
+  --report-bg: oklch(100% 0 0);
   --text-main: oklch(20% 0.02 30);
   --text-muted: oklch(50% 0.02 30);
-  --accent: oklch(45% 0.15 30); /* Grandmother's Signature Red */
-  --bubble-ai: oklch(95% 0.02 30);
-  --bubble-user: oklch(45% 0.15 30);
+  --accent: oklch(45% 0.15 30); /* Traditional Crimson */
+  --highlight: oklch(90% 0.1 80);
+  --max-width: 700px;
 }
 
-@layer base, components, chat;
+@layer base, components, report;
 
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
-    line-height: 1.6;
+    line-height: 1.8;
     overflow-x: hidden;
+    padding: 2rem 1rem;
   }
 }
 
 @layer components {
   .app-shell {
-    max-width: 600px;
+    max-width: var(--max-width);
     margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    position: relative;
+    background: var(--report-bg);
+    padding: 3rem 4rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    border-radius: 4px; /* Classic Paper Feel */
+    min-height: 80vh;
   }
 
-  header {
-    padding: 2rem 0;
+  @media (max-width: 600px) {
+    .app-shell { padding: 2rem; }
+  }
+
+  .header {
     text-align: center;
-    border-bottom: 1px dashed oklch(80% 0.02 30);
-    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--text-main);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
-  header h1 {
-    font-size: 1.5rem;
-    color: var(--accent);
+  .header h1 {
+    font-size: 2rem;
     font-weight: 800;
+    margin-bottom: 0.5rem;
   }
 
-  .input-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
+  .header p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .input-section {
+    max-width: 400px;
+    margin: 0 auto 4rem auto;
   }
 
   .field { margin-bottom: 1.5rem; }
-  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-muted); }
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
   
   input, select {
     width: 100%;
-    padding: 1rem;
-    border: 1px solid oklch(90% 0.01 30);
-    border-radius: 12px;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 1rem;
-    background: oklch(99% 0 0);
   }
 
   .btn {
     width: 100%;
-    padding: 1.2rem;
-    border: none;
-    border-radius: 12px;
-    background: var(--accent);
+    padding: 1rem;
+    background: var(--text-main);
     color: white;
+    border: none;
     font-weight: 700;
-    font-size: 1.1rem;
     cursor: pointer;
     transition: 0.2s;
   }
+
+  .btn:hover { background: var(--accent); }
 }
 
-@layer chat {
-  #chat-history {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-bottom: 5rem;
+@layer report {
+  #report-content {
+    display: none;
+    animation: fadeIn 1s ease;
   }
 
-  .message {
-    max-width: 85%;
-    padding: 1.2rem 1.5rem;
-    border-radius: 20px;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    position: relative;
-    animation: messageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
-
-  @keyframes messageIn {
-    from { opacity: 0; transform: translateY(10px); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .message.ai {
-    align-self: flex-start;
-    background: white;
-    border-bottom-left-radius: 4px;
-    color: var(--text-main);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    border: 1px solid oklch(95% 0.01 30);
+  .narrative-p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    text-align: justify;
+    word-break: keep-all;
   }
 
-  .message.user {
-    align-self: flex-end;
-    background: var(--accent);
-    color: white;
-    border-bottom-right-radius: 4px;
+  .highlight-sentence {
+    display: block;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin: 2.5rem 0;
+    line-height: 1.4;
+    border-left: 4px solid var(--accent);
+    padding-left: 1.5rem;
   }
 
-  .typing-indicator {
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-top: 3.5rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+  }
+
+  .footer-advice {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
     font-style: italic;
     color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-left: 1rem;
-    display: none;
-  }
-
-  .next-controls {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 500px;
-    display: none;
-    gap: 1rem;
+    text-align: center;
   }
 }
