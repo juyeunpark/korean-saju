@@ -1,52 +1,49 @@
-# **Blueprint: 팩폭할머니 사주 (Fact-Bombing Grandmother Saju)**
+# **Blueprint: AI Saju Analysis System (Deep Myeongrihak)**
 
 ## **1. Project Overview**
-A fun, entertainment-focused Saju (Korean fortune-telling) web app that delivers blunt, direct, and humorous life advice in the persona of a "Fact-Bombing Grandmother."
+A professional-grade (yet entertainment-focused) Saju analysis system that combines traditional Korean Myeongrihak with an "AI Psychologist" persona. It provides deep, structured insights into personality, life cycles, and element balance.
 
 ### **Core Capabilities**
-- **Saju Analysis:** Simplified calculation based on birth date (Year/Month/Day) to determine the "Element" (Ilju/Ilgan).
-- **Fact-Bomb Persona:** Blunt, sarcastic, yet caring grandmother tone.
-- **Modern UI:** Responsive, accessible, and visually themed around "Traditional Modern" Korean aesthetics.
+- **Deep Saju Analysis:** Simplified Manse-ryeok (Calendar) calculation to determine the "Four Pillars" (Year, Month, Day, Time) and "Five Elements" balance.
+- **AI Psychologist Tone:** Insightful, blunt, analytical, and structured advice.
+- **Structured Reporting:** Comparative analysis of strengths vs. weaknesses.
 
 ---
 
 ## **2. Detailed Project Outline**
 
 ### **Design & Style**
-- **Theme:** "Grandmother's Cozy Room" with a modern twist.
+- **Theme:** "Digital Mysticism" - A mix of technical data visualization and traditional Korean aesthetics.
 - **Color Palette:**
-  - `background`: OKLCH(95% 0.01 80) (Warm parchment)
-  - `primary`: OKLCH(45% 0.15 30) (Traditional Crimson)
-  - `secondary`: OKLCH(40% 0.12 250) (Deep Indigo)
-  - `accent`: OKLCH(60% 0.1 140) (Sage Green)
-- **Typography:**
-  - Headings: Expressive Serif (e.g., 'Gowun Batang' or similar).
-  - Body: Readable Sans-serif (e.g., 'Pretendard' or system default).
-- **Visual Effects:** 
-  - Subtle noise texture overlay.
-  - Multi-layered drop shadows for cards.
-  - Interactive "glow" on buttons.
+  - `background`: OKLCH(15% 0.02 250) (Deep Midnight Blue)
+  - `card`: OKLCH(20% 0.03 250) (Dark Navy)
+  - `text`: OKLCH(95% 0.01 250) (Soft White)
+  - `accent-wood`: #4CAF50, `accent-fire`: #F44336, `accent-earth`: #FFEB3B, `accent-metal`: #9E9E9E, `accent-water`: #2196F3.
+- **Visuals:** 
+  - Radar charts or bar graphs for Element Balance.
+  - Clean, structured "Analysis Cards."
 
-### **Features**
-1. **`<saju-app>`:** Main state container.
-2. **`<saju-form>`:** 
-   - Birth Date picker.
-   - Birth Time selection (Optional).
-   - Gender toggle.
-3. **`<saju-result>`:** 
-   - Grandmother's "Fact-Bomb" message.
-   - Detailed sections: Summary, Love, Career, Advice.
-   - "Try Again" button.
+### **Features & Report Structure**
+1. **Overall Summary:** Interpretation of the total energy balance.
+2. **Strength Analysis:** 3-5 dominant traits and their life impact.
+3. **Weakness/Missing Elements:** Lacking traits and their real-life impact.
+4. **Balance Comparison:** Explicit comparison of Strong vs. Weak.
+5. **Life Specifics:**
+   - **Career:** Suitable environments, risk patterns (burnout, etc.).
+   - **Wealth:** Success and financial patterns.
+   - **Relationship:** Attachment styles, conflict patterns, ideal partners.
+6. **Future Outlook:** Probabilistic tendencies based on current energy.
 
 ---
 
 ## **3. Implementation History**
-- **Phase 0:** Initialized Git and connected to `https://github.com/juyeunpark/korean-saju.git`.
-- **Phase 1 (Current):** Setting up basic HTML/CSS/JS structure and Saju logic.
+- **Phase 0:** Basic "Fact-Bombing Grandmother" app with simple logic.
+- **Phase 1 (Current):** Upgrading logic engine to support 10 Heavenly Stems and 12 Earthly Branches approximation.
+- **Phase 2:** Redesigning UI for "AI Psychologist" persona and structured data display.
 
 ---
 
-## **4. Current Step: Foundation & Logic**
-- Implementing `saju-logic.js` for element calculation.
-- Defining the "Fact-Bomb" database.
-- Building the main shell in `index.html`.
+## **4. Current Step: Logic Expansion & Data Mapping**
+- Implementing a robust `saju-engine.js` that approximates the Four Pillars.
+- Creating a comprehensive content library for the "AI Psychologist" persona.
+- Updating `index.html` to accommodate the 7-part structured report.
