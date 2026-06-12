@@ -1,135 +1,111 @@
 :root {
   --bg-color: oklch(98% 0.01 80);
-  --report-bg: oklch(100% 0 0);
-  --text-main: oklch(20% 0.02 30);
-  --text-muted: oklch(50% 0.02 30);
-  --accent: oklch(45% 0.15 30); /* Traditional Crimson */
-  --highlight: oklch(90% 0.1 80);
-  --max-width: 700px;
+  --text-main: oklch(15% 0.02 30);
+  --text-dim: oklch(45% 0.02 30);
+  --accent: oklch(45% 0.15 30);
+  --max-width: 600px;
 }
 
-@layer base, components, report;
+@layer base, landing;
 
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    font-family: 'Pretendard', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
-    line-height: 1.8;
+    line-height: 1.6;
     overflow-x: hidden;
-    padding: 2rem 1rem;
   }
 }
 
-@layer components {
-  .app-shell {
+@layer landing {
+  .landing-shell {
     max-width: var(--max-width);
     margin: 0 auto;
-    background: var(--report-bg);
-    padding: 3rem 4rem;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-    border-radius: 4px; /* Classic Paper Feel */
-    min-height: 80vh;
+    padding: 2rem 1.5rem 8rem 1.5rem;
+    min-height: 100vh;
   }
 
-  @media (max-width: 600px) {
-    .app-shell { padding: 2rem; }
-  }
-
-  .header {
+  /* Input View */
+  .hero-input {
     text-align: center;
-    border-bottom: 2px solid var(--text-main);
-    padding-bottom: 2rem;
-    margin-bottom: 3rem;
+    padding: 4rem 0;
   }
+  .hero-input h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent); }
+  .form-box { background: white; padding: 2rem; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+  .field { margin-bottom: 1.5rem; text-align: left; }
+  label { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); display: block; margin-bottom: 0.5rem; }
+  input { width: 100%; padding: 1rem; border-radius: 15px; border: 1px solid #eee; font-size: 1rem; background: #fafafa; }
+  .btn-primary { width: 100%; padding: 1.2rem; border-radius: 15px; border: none; background: var(--text-main); color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+  .btn-primary:hover { transform: scale(1.02); background: var(--accent); }
 
-  .header h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
+  /* Result View */
+  #viral-report { display: none; }
+
+  .hook-section {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn 1.5s ease;
   }
-
-  .header p {
-    font-size: 1rem;
-    color: var(--text-muted);
-    font-style: italic;
-  }
-
-  .input-section {
-    max-width: 400px;
-    margin: 0 auto 4rem auto;
-  }
-
-  .field { margin-bottom: 1.5rem; }
-  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .hook-text { font-size: 1.8rem; font-weight: 800; line-height: 1.4; color: var(--accent); word-break: keep-all; }
   
-  input, select {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
+  .scroll-hint { margin-top: 2rem; font-size: 0.9rem; color: var(--text-dim); animation: bounce 2s infinite; }
+  @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
 
-  .btn {
-    width: 100%;
-    padding: 1rem;
+  .insight-item {
+    margin: 6rem 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+  }
+  .insight-item.visible { opacity: 1; transform: translateY(0); }
+  .insight-label { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); margin-bottom: 0.5rem; display: block; }
+  .insight-content { font-size: 1.3rem; font-weight: 600; line-height: 1.5; word-break: keep-all; }
+
+  .pain-point-box {
     background: var(--text-main);
     color: white;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .btn:hover { background: var(--accent); }
-}
-
-@layer report {
-  #report-content {
-    display: none;
-    animation: fadeIn 1s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .narrative-p {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    text-align: justify;
-    word-break: keep-all;
-  }
-
-  .highlight-sentence {
-    display: block;
-    font-weight: 800;
-    font-size: 1.4rem;
-    color: var(--accent);
-    margin: 2.5rem 0;
-    line-height: 1.4;
-    border-left: 4px solid var(--accent);
-    padding-left: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin-top: 3.5rem;
-    margin-bottom: 1rem;
-    text-decoration: underline;
-    text-underline-offset: 8px;
-  }
-
-  .footer-advice {
-    margin-top: 5rem;
-    padding-top: 2rem;
-    border-top: 1px solid #ddd;
-    font-style: italic;
-    color: var(--text-muted);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    margin: 8rem 0;
     text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
   }
+  .pain-point-text { font-size: 1.5rem; font-weight: 800; line-height: 1.4; word-break: keep-all; }
+  .caption-label { display: block; font-size: 0.7rem; margin-top: 1.5rem; opacity: 0.6; }
+
+  .final-message {
+    text-align: center;
+    padding: 4rem 0;
+    border-top: 1px dashed #ccc;
+    margin-top: 4rem;
+  }
+  .grandma-voice { font-size: 1.1rem; color: var(--text-dim); font-style: italic; line-height: 1.8; }
+
+  .share-section {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    z-index: 100;
+  }
+  .btn-share {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 50px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 }

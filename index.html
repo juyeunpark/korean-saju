@@ -3,36 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>할머니의 인생 감명서</title>
+  <title>팩폭할머니의 인생 상담</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <div class="app-shell">
-    <div class="header">
-      <h1>👵 팩폭할머니 사주 감명서</h1>
-      <p>Destiny Analysis & Psychological Profile</p>
+  <div class="landing-shell">
+    
+    <!-- Input Section -->
+    <div id="input-view" class="hero-input">
+      <h1>👵 팩폭할머니</h1>
+      <p style="margin-bottom: 3rem; color: var(--text-dim);">뼈 때리는 인생 상담소</p>
+      
+      <div class="form-box">
+        <div class="field">
+          <label>생년월일 (필수)</label>
+          <input type="date" id="birth-date">
+        </div>
+        <div class="field">
+          <label>태어난 시간 (선택)</label>
+          <input type="time" id="birth-time">
+        </div>
+        <div class="field">
+          <label>성함</label>
+          <input type="text" id="user-name" placeholder="이름이 뭐냐?">
+        </div>
+        <button class="btn-primary" id="analyze-btn">운명 확인하기</button>
+      </div>
     </div>
 
-    <div id="input-view" class="input-section">
-      <div class="field">
-        <label>생년월일 (필수)</label>
-        <input type="date" id="birth-date">
+    <!-- Viral Result Section -->
+    <div id="viral-report">
+      
+      <!-- 1. Hook -->
+      <section class="hook-section">
+        <div class="hook-text" id="res-hook">"너는 참... 성실한 게 아니라 미련하게 버티고 있는 거다."</div>
+        <div class="scroll-hint">밑으로 내려서 진실을 마주해라 ↓</div>
+      </section>
+
+      <!-- 2. One-line Insights -->
+      <section class="insight-item">
+        <span class="insight-label">인생 총평</span>
+        <div class="insight-content" id="res-summary">인생이 왜 이렇게 뻑뻑한가 했더니, 네 고집이 길을 다 막고 있었네.</div>
+      </section>
+
+      <section class="insight-item">
+        <span class="insight-label">성격 팩폭</span>
+        <div class="insight-content" id="res-personality">남 눈치 보느라 정작 네 속은 다 썩어 문드러지는 줄도 모르지?</div>
+      </section>
+
+      <section class="insight-item">
+        <span class="insight-label">연애 훈수</span>
+        <div class="insight-content" id="res-love">사랑이 아니라 집착이다. 상대방 숨 막히게 하지 말고 네 삶이나 살아.</div>
+      </section>
+
+      <section class="insight-item">
+        <span class="insight-label">재물/성공</span>
+        <div class="insight-content" id="res-wealth">돈은 버는데 새나가는 구멍이 태평양이야. 허영심 좀 버려라.</div>
+      </section>
+
+      <!-- 4. Highlighted Pain Point -->
+      <section class="pain-point-box">
+        <div class="pain-point-text" id="res-pain-point">"너는 실패가 두려운 게 아니라, 남들에게 실패한 것처럼 보일까 봐 그게 제일 무서운 거다."</div>
+        <span class="caption-label">스크린샷 찍어서 평생 기억해라</span>
+      </section>
+
+      <!-- 5. Future Tendency -->
+      <section class="insight-item">
+        <span class="insight-label">미래 전망</span>
+        <div class="insight-content" id="res-future">지금처럼 살면 그냥 늙은 꼰대 되는 거고, 고집 꺾으면 명예는 얻을 팔자다.</div>
+      </section>
+
+      <!-- 6. Final Message -->
+      <section class="final-message">
+        <div class="grandma-voice" id="res-advice">
+          자, 이제 가서 밥이나 먹어라. 
+          내가 한 말 기분 나쁘다고 치워두지 말고, 
+          밤에 잠 안 올 때 한 번 더 읽어봐. 
+          너는 충분히 잘 살 수 있는 놈인데 안 해서 문제인 거야. 알겠냐?
+        </div>
+      </section>
+
+      <!-- 7. Share Button -->
+      <div class="share-section">
+        <button class="btn-share" id="share-btn">이 팩폭 공유하기</button>
       </div>
-      <div class="field">
-        <label>태어난 시간 (선택)</label>
-        <input type="time" id="birth-time">
-      </div>
-      <div class="field">
-        <label>성함</label>
-        <input type="text" id="user-name" placeholder="이름이 뭐냐?">
-      </div>
-      <button class="btn" id="generate-btn">감명서 작성 시작</button>
     </div>
 
-    <div id="report-content">
-      <!-- Generated long-form narrative will go here -->
-    </div>
   </div>
 
   <script type="module" src="/main.js"></script>
